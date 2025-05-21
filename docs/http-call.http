@@ -1,0 +1,14 @@
+### 保存学生
+POST localhost:8080/student/save
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "John Doe",
+  "age": 30,
+  "sex": 1
+}
+
+
+### 获取学生
+GET localhost:8080/student/get/1
