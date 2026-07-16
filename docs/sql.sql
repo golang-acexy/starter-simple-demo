@@ -1,6 +1,6 @@
 create table test.demo_student
 (
-    id          bigint unsigned auto_increment
+    id          bigint auto_increment
         primary key,
     create_time datetime    default CURRENT_TIMESTAMP null,
     update_time datetime    default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP,
@@ -9,4 +9,3 @@ create table test.demo_student
     age         int         default 0                 not null,
     teacher_id  bigint                                null
 )  charset = utf8mb4 engine = InnoDB;
-

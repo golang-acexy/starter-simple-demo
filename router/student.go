@@ -23,38 +23,42 @@ func (*StudentRouter) Info() *ginstarter.RouterInfo {
 
 func (s *StudentRouter) Handlers(router *ginstarter.RouterWrapper) {
 	router.POST("save", s.save())
-	router.GET("get/:id", s.getById())
+	router.GET("get/:id", s.getByID())
 }
 func (*StudentRouter) save() ginstarter.HandlerWrapper {
 	return func(request *ginstarter.Request) (ginstarter.Response, error) {
 		var student model.Student
-		request.MustBindBodyJson(&student)
-		_, _ = studentMapper.Save(&student)
+		request.MustBindBodyJSON(&student)
+		if _, err := studentMapper.Insert(&student); err != nil {
+			return nil, err
+		}
 		return ginstarter.RespRestSuccess(student.ID), nil
 	}
 }
 
-func (*StudentRouter) getById() ginstarter.HandlerWrapper {
+func (*StudentRouter) getByID() ginstarter.HandlerWrapper {
 	return func(request *ginstarter.Request) (ginstarter.Response, error) {
-		//studentId := conversion.ParseIntPanic(request.GetPathParam("id"))
-		studentId := conversion.ParseInt(request.GetPathParam("id"))
+		studentID := conversion.ParseInt(request.GetPathParam("id"))
+		if studentID <= 0 {
+			return ginstarter.RespRestBadParameters("无效的学生ID"), nil
+		}
 		var result model.Student
-		err := redisStringCmd.GetAnyWithGob(consts.RedisStudentKey, &result, studentId)
+		err := redisStringCmd.GetAnyWithGob(consts.RedisStudentKey, &result, studentID)
 		if err == nil {
-			logger.Logrus().Debugln("已从缓存中获取学生信息", studentId)
+			logger.Logrus().Debugln("已从缓存中获取学生信息", studentID)
 		} else {
-			row, err := studentMapper.SelectById(studentId, &result)
+			logger.Logrus().WithError(err).Debugln("学生缓存未命中，回源数据库", studentID)
+			row, err := studentMapper.SelectByID(studentID, &result)
 			if err != nil {
 				return nil, err
 			} else if row == 0 {
 				return ginstarter.RespRestBadParameters("无效的学生ID"), nil
 			} else {
-				err = redisStringCmd.SetAnyWithGob(consts.RedisStudentKey, result, studentId)
+				err = redisStringCmd.SetAnyWithGob(consts.RedisStudentKey, result, studentID)
 				if err != nil {
-					logger.Logrus().Errorln("设置学生信息缓存失败", studentId)
-					return nil, err
+					logger.Logrus().WithError(err).Errorln("设置学生信息缓存失败", studentID)
 				} else {
-					logger.Logrus().Debugln("已从数据库中获取学生信息并创建缓存", studentId)
+					logger.Logrus().Debugln("已从数据库中获取学生信息并创建缓存", studentID)
 				}
 			}
 		}

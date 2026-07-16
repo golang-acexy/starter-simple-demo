@@ -10,13 +10,13 @@ const (
 type Sex uint8
 
 type Student struct {
-	gormstarter.BaseModel[int]
+	ID         int64                 `gorm:"primaryKey;<-:false" json:"id"`
 	CreateTime gormstarter.Timestamp `gorm:"<-:false" json:"createTime"`
-	UpdateTime gormstarter.Timestamp `gorm:"<-:update" json:"updateTime"`
+	UpdateTime gormstarter.Timestamp `gorm:"<-:false" json:"updateTime"`
 	Name       string                `json:"name"`
 	Sex        Sex                   `json:"sex"`
 	Age        uint8                 `json:"age"`
-	TeacherId  int                   `json:"teacherId"`
+	TeacherID  int64                 `json:"teacherId"`
 }
 
 func (Student) TableName() string {

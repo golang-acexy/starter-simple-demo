@@ -1,6 +1,9 @@
 package main
 
 import (
+	"os"
+	"time"
+
 	"github.com/acexy/golang-toolkit/logger"
 	"github.com/acexy/golang-toolkit/sys"
 	"github.com/acexy/starter-simple-demo/router"
@@ -10,8 +13,6 @@ import (
 	"github.com/golang-acexy/starter-redis/redisstarter"
 	"github.com/redis/go-redis/v9"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"os"
-	"time"
 )
 
 func setLogger() {
@@ -30,11 +31,15 @@ func loadStarter() []parent.Starter {
 		// gorm 组件
 		&gormstarter.GormStarter{
 			Config: gormstarter.GormConfig{
+				MySQL: &gormstarter.MySQLConfig{
+					DatabaseConfig: gormstarter.DatabaseConfig{
 				Host:     "127.0.0.1",
 				Port:     13306,
 				Username: "root",
 				Password: "root",
 				Database: "test",
+					},
+				},
 			},
 		},
 		// Redis 组件
@@ -64,7 +69,7 @@ func loadStarter() []parent.Starter {
 func main() {
 	setLogger()
 
-	starterLoader := parent.NewStarterLoader(loadStarter())
+	starterLoader := parent.InitStarterLoader(loadStarter())
 	err := starterLoader.Start()
 	if err != nil {
 		logger.Logrus().WithError(err).Errorln("应用启动异常")
@@ -72,5 +77,5 @@ func main() {
 	}
 
 	sys.ShutdownHolding()
-	_, _ = starterLoader.StopBySetting(time.Second * 30)
+	_, _ = starterLoader.StopAllBySetting(time.Second * 30)
 }

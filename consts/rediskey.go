@@ -1,8 +1,9 @@
 package consts
 
 import (
-	"github.com/golang-acexy/starter-redis/redisstarter"
 	"time"
+
+	"github.com/golang-acexy/starter-redis/redisstarter"
 )
 
 var (
