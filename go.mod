@@ -3,11 +3,11 @@ module github.com/acexy/starter-simple-demo
 go 1.25.8
 
 require (
-	github.com/acexy/golang-toolkit v0.0.65-0.20260715114635-d55e28e96954
-	github.com/golang-acexy/starter-gin v0.1.31-0.20260714014621-f3f328dd1ef5
-	github.com/golang-acexy/starter-gorm v0.1.28-0.20260715061321-dbe455451822
-	github.com/golang-acexy/starter-parent v0.1.23-0.20260713093351-c249c35849a4
-	github.com/golang-acexy/starter-redis v0.1.17-0.20260713094258-e62d2ac8bf16
+	github.com/acexy/golang-toolkit v1.25.0
+	github.com/golang-acexy/starter-gin v0.1.31-0.20260717021700-feed7bd9abd3
+	github.com/golang-acexy/starter-gorm v0.1.28-0.20260717075516-c2ffdc74d6c3
+	github.com/golang-acexy/starter-parent v1.25.0
+	github.com/golang-acexy/starter-redis v1.25.0
 	github.com/redis/go-redis/v9 v9.21.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
@@ -40,7 +40,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.4.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/libp2p/go-reuseport v0.4.0 // indirect
-	github.com/mattn/go-isatty v0.0.22 // indirect
+	github.com/mattn/go-isatty v0.0.23 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.4.3 // indirect

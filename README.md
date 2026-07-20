@@ -11,6 +11,10 @@ It demonstrates:
 - Redis cache-aside access with `starter-redis`
 - coordinated startup and shutdown
 
+## Ecosystem Position
+
+This demo is the direct-starter adoption path: it uses the lifecycle and infrastructure modules without `cloud-web`, `cloud-database`, or generated application layers. Compare it with `cloud-simple-demo` when deciding how much framework structure an application needs.
+
 ## Requirements
 
 - Go 1.25.8 or later
