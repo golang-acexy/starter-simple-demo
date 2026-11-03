@@ -17,7 +17,7 @@ This demo is the direct-starter adoption path: it uses the lifecycle and infrast
 
 ## Requirements
 
-- Go 1.25.8 or later
+- Go 1.26.7 or later
 - MySQL on `127.0.0.1:13306`
 - Redis on `127.0.0.1:6379`
 
